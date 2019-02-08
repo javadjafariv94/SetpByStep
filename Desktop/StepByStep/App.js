@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image ,View,Text} from 'react-native';
-
+import Greeting from './ReactNative/greeting'
 export default class App extends Component {
  render(){
     
@@ -18,15 +18,3 @@ export default class App extends Component {
   }
 }
 
-class Greeting extends Component{
-render(){
-
-
- return(
-   <View>
-      <Text>{ this.props.name }  { this.props.family }             {this.props.city} </Text>
-
-    </View>
- );
-}
-}
