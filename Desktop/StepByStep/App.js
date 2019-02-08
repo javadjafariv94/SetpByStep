@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image } from 'react-native';
+import { Image ,View,Text} from 'react-native';
 
-export default class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
+export default class App extends Component {
+ render(){
+    
     return (
-      <Image source={pic} style={{width: 193, height: 110}}/>
-      
-      //<Image source={{uri : 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'}} style={{width: 193, height: 110}}/>
+      <View>
+         
+         <Greeting name='javad'  family ='jafari'  city='Shabestar'/>
+         <Greeting name='azam'   family ='montazeri' city='Vaygan'/>
+         <Greeting name='erfan'  family='jafari1'  city='Lanadan'/>
+         <Greeting name='ali'    family='jafari2'  city='Tabriz'/>
+         <Greeting name='fatemeh'family='jafari3'  city='Tehran'/>
 
-
+     </View>
     );
   }
 }
 
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => Bananas);
+class Greeting extends Component{
+render(){
+
+
+ return(
+   <View>
+      <Text>{ this.props.name }  { this.props.family }             {this.props.city} </Text>
+
+    </View>
+ );
+}
+}
