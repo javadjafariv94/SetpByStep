@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import { Image ,View,Text} from 'react-native';
-import Greeting from './ReactNative/greeting'
+
+class Blink extends Component{
+constructor(props){
+ super(props);
+ this.state ={ isShowingText :true };
+
+ setInterval(() => (this.setState(previosState11 =>({isShowingText : !previosState11.isShowingText})) ),1000);
+}
+
+render(){
+if (!this.state.isShowingText ) { return null; }
+
+return(
+  <View>  
+    <Text>{this.props.text} </Text>
+  </View>
+);
+}
+
+
+}
 export default class App extends Component {
  render(){
     
     return (
       <View>
-         
-         <Greeting name='javad'  family ='jafari'  city='Shabestar'/>
-         <Greeting name='azam'   family ='montazeri' city='Vaygan'/>
-         <Greeting name='erfan'  family='jafari1'  city='Lanadan'/>
-         <Greeting name='ali'    family='jafari2'  city='Tabriz'/>
-         <Greeting name='fatemeh'family='jafari3'  city='Tehran'/>
-
+      <Blink text=' I love to blink 0' />
+      <Blink text=' I love to blink  1' />
+      <Blink text=' I love to blink   2' />
+      <Blink text=' I love to blink    3' />
      </View>
     );
   }

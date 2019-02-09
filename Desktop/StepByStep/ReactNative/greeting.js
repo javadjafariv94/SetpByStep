@@ -8,7 +8,7 @@ export default class Greeting extends Component{
     
      return(
        <View>
-          <Text>{ this.props.name }  { this.props.family }             {this.props.city} </Text>
+          <Text>{ this.props.name }  { this.props.family }             {this.props.city}  </Text>
     
         </View>
      );
