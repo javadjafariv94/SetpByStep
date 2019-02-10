@@ -1,54 +1,31 @@
 import React, { Component } from 'react';
 import { Alert, Platform, StyleSheet,Text,
-         TouchableHighlight, TouchableOpacity,
-         TouchableNativeFeedback, TouchableWithoutFeedback,
+         ScrollView,Image,
          View } from 'react-native';
 
 export default class App extends Component {
-  _onPressButton(){
-    Alert.alert('You tapped the button!')
-  } 
-  _onLongPressButton(){
-    Alert.alert('You long-press the button')
-  }
-
-
+ 
   render() {
     return (
-      <View style = {styles.container}>
-       <TouchableHighlight onPress ={this._onPressButton} underlayColor='white'>
-         <View style = {styles.button}>
-           <Text style ={styles.buttonText}>TouchableHighlight</Text>
-         </View>
-       </TouchableHighlight>
-       <TouchableOpacity onPress={this._onPressButton}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>TouchableOpacity</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableNativeFeedback
-            onPress={this._onPressButton}
-            background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>TouchableNativeFeedback</Text>
-          </View>
-        </TouchableNativeFeedback>
-        <TouchableWithoutFeedback
-            onPress={this._onPressButton}
-            >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
-          </View>
-        </TouchableWithoutFeedback>
-
+      <ScrollView>
         
-        <TouchableHighlight onPress={this._onPressButton} onLongPress={this._onLongPressButton} underlayColor="white">
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Touchable with Long Press</Text>
-          </View>
-        </TouchableHighlight>
-
-      </View>
+        <Text style={{fontSize:96}}>Scroll me plz 1</Text>
+        <Text style={{fontSize:96}}>Scroll me plz 2</Text>
+        <Text style={{fontSize:96}}>Scroll me plz 3</Text>
+        <Text style={{fontSize:96}}>Scroll me plz 4</Text>
+        <Text style={{fontSize:96}}>Scroll me plz 5</Text>
+        
+        <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
+        <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
+        <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
+        <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
+         
+        <Text style={{fontSize:30}}>Scroll me plz 10</Text>
+        <Text style={{fontSize:30}}>Scroll me plz 20</Text>
+        <Text style={{fontSize:30}}>Scroll me plz 30</Text>
+        <Text style={{fontSize:30}}>Scroll me plz 40</Text>
+        <Text style={{fontSize:30}}>Scroll me plz 50</Text>
+      </ScrollView>
      );
   }
 }
