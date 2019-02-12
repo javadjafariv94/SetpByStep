@@ -1,57 +1,49 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,
-         FlatList,
-         View } from 'react-native';
+import { Text,View,ActivityIndicator,FlatList } from 'react-native';
 
 export default class App extends Component {
- 
+  
+  constructor(props){
+    super(props);
+    this.state ={isLoading :true}
+  }
+
+  componentDidMount(){
+    return fetch('https://facebook.github.io/react-native/movies.json')
+      .then((response) => response.json())
+      .then((responseJson) =>{
+        this.setState({
+          isLoading: false,
+          dataSource :responseJson.movies,
+        },function(){
+       });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      }
+
+
+
   render() {
+    if(this.state.isLoading){
+      return(
+        <View style ={{flex :1 ,padding:20}}>
+          <ActivityIndicator/> 
+        </View>
+      )
+    }
+
     return (
-      <View style = {styles.container}>
+      <View style={{flex:1 ,paddingTop:20 }}>
         <FlatList
-          data ={[
-            {key :'Ali'},
-            {key :'Mohammad'},
-            {key :'Fateme'},
-            {key :'Hasan'},
-            {key :'Hosein'},
-            {key :'Ali'},
-            {key :'Mohammad'},
-            {key :'Fateme'},
-            {key :'Hasan'},
-            {key :'Hosein'},
-            {key :'Ali'},
-            {key :'Mohammad'},
-            {key :'Fateme'},
-            {key :'Hasan'},
-            {key :'Hosein'},
-            {key :'Ali'},
-            {key :'Mohammad'},
-            {key :'Fateme'},
-            {key :'Hasan'},
-            {key :'Hosein'},
-            {key :'Ali'},
-            {key :'Mohammad'},
-            {key :'Fateme'},
-            {key :'Hasan'},
-            {key :'Hosein'},
-          ]}
-          renderItem={({item}) => <Text style = {styles.item}> {item.key} </Text>}
+          data={this.state.dataSource}
+          renderItem={({item}) =><Text> ID {item.id} is = {item.title},{item.releaseYear} </Text>}
+          keyExtractor={({id},index)=>id}
         />
-      </View>
+      </View> 
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingTop: 22
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
-})
 
