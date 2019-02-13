@@ -28,6 +28,23 @@ class DetailsScreen extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
+        <Text>Details 1 </Text>
+        <Text>Details 2 </Text>
+        <Text>Details 3 </Text>
+        <Text>Details 4 </Text>
+        
+        <Button
+         title ="Go To Home screen"
+         onPress={() =>{ 
+           this.props.navigation.dispatch(StackActions.reset({
+             index:0,
+             actions : [
+               NavigationActions.navigate({routeName :'Home'})
+             ],   
+
+           }))
+          }}
+        />
       </View>
     );
   }  
