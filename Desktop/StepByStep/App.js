@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
-import { createAppContainer, createStackNavigator } from 'react-navigation'; // Version can be specified in package.json
+import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 
 class HomeScreen extends React.Component {
   render() {
@@ -9,7 +9,13 @@ class HomeScreen extends React.Component {
         <Text>Home Screen</Text>
         <Button
           title="Go to Details"
-          onPress={() => this.props.navigation.navigate('Details')}
+          onPress={() => {
+            /* 1. Navigate to the Details route with params */
+            this.props.navigation.navigate('Details', {
+              itemId: 86,
+              otherParam: 'anything you want here',
+            });
+          }}
         />
       </View>
     );
@@ -18,12 +24,22 @@ class HomeScreen extends React.Component {
 
 class DetailsScreen extends React.Component {
   render() {
+    /* 2. Get the param, provide a fallback value if not available */
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('itemId', 'NO-ID');
+    const otherParam = navigation.getParam('otherParam', 'some default value');
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
+        <Text>itemId: {JSON.stringify(itemId)}</Text>
+        <Text>otherParam: {JSON.stringify(otherParam)}</Text>
         <Button
           title="Go to Details... again"
-          onPress={() => this.props.navigation.push('Details')}
+          onPress={() =>
+            this.props.navigation.push('Details', {
+              itemId: Math.floor(Math.random() * 100),
+            })}
         />
         <Button
           title="Go to Home"
@@ -40,12 +56,8 @@ class DetailsScreen extends React.Component {
 
 const RootStack = createStackNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-    },
-    Details: {
-      screen: DetailsScreen,
-    },
+    Home: HomeScreen,
+    Details: DetailsScreen,
   },
   {
     initialRouteName: 'Home',
