@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
+import { Button, View, Text } from 'react-native';
+import { createAppContainer, createStackNavigator } from 'react-navigation'; // Version can be specified in package.json
 
 class HomeScreen extends React.Component {
   render() {
@@ -9,18 +9,11 @@ class HomeScreen extends React.Component {
         <Text>Home Screen</Text>
         <Button
           title="Go to Details"
-          onPress={() => {
-            this.props.navigation.dispatch(StackActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Details' })
-              ],
-            }))
-          }}
+          onPress={() => this.props.navigation.navigate('Details')}
         />
       </View>
     );
-  }  
+  }
 }
 
 class DetailsScreen extends React.Component {
@@ -28,33 +21,41 @@ class DetailsScreen extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
-        <Text>Details 1 </Text>
-        <Text>Details 2 </Text>
-        <Text>Details 3 </Text>
-        <Text>Details 4 </Text>
-        
         <Button
-         title ="Go To Home screen"
-         onPress={() =>{ 
-           this.props.navigation.dispatch(StackActions.reset({
-             index:0,
-             actions : [
-               NavigationActions.navigate({routeName :'Home'})
-             ],   
-
-           }))
-          }}
+          title="Go to Details... again"
+          onPress={() => this.props.navigation.push('Details')}
+        />
+        <Button
+          title="Go to Home"
+          onPress={() => this.props.navigation.navigate('Home')}
+        />
+        <Button
+          title="Go back"
+          onPress={() => this.props.navigation.goBack()}
         />
       </View>
     );
-  }  
+  }
 }
 
-const AppNavigator = createStackNavigator({
-  Home: {screen: HomeScreen },
-  Details: {screen: DetailsScreen },
-}, {
+const RootStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+    },
+    Details: {
+      screen: DetailsScreen,
+    },
+  },
+  {
     initialRouteName: 'Home',
-});
+  }
+);
 
-export default createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
