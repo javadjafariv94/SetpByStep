@@ -1,49 +1,41 @@
-import React, { Component } from 'react';
-import { Text,View,ActivityIndicator,FlatList } from 'react-native';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-export default class App extends Component {
-  
-  constructor(props){
-    super(props);
-    this.state ={isLoading :true}
-  }
-
-  componentDidMount(){
-    return fetch('https://facebook.github.io/react-native/movies.json')
-      .then((response) => response.json())
-      .then((responseJson) =>{
-        this.setState({
-          isLoading: false,
-          dataSource :responseJson.movies,
-        },function(){
-       });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-      }
-
-
-
+class HomeScreen extends React.Component {
   render() {
-    if(this.state.isLoading){
-      return(
-        <View style ={{flex :1 ,padding:20}}>
-          <ActivityIndicator/> 
-        </View>
-      )
-    }
-
     return (
-      <View style={{flex:1 ,paddingTop:20 }}>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) =><Text> ID {item.id} is = {item.title},{item.releaseYear} </Text>}
-          keyExtractor={({id},index)=>id}
-        />
-      </View> 
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+      </View>
     );
   }
 }
 
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+      </View>
+    );
+  }
+}
 
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Details: DetailsScreen,
+  },
+  {
+    initialRouteName: 'Details',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
