@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, View, Text } from 'react-native';
+import { Button, Image, Platform, View, Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class LogoTitle extends React.Component {
@@ -7,28 +7,44 @@ class LogoTitle extends React.Component {
     return (
       <Image
       source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-        style={{ width: 50, height: 50 }}
+
+        style={{ width: 30, height: 30 }}
       />
     );
   }
 }
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: <LogoTitle />,
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Info"
-        color="#fff"
-      />
-    ),
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: <LogoTitle />,
+      headerRight: (
+        <Button
+          onPress={navigation.getParam('increaseCount')}
+          title="+1"
+          color={Platform.OS === 'ios' ? '#fff' : null}
+        />
+      ),
+    };
+  };
+
+  componentWillMount() {
+    this.props.navigation.setParams({ increaseCount: this._increaseCount });
+  }
+
+  state = {
+    count: 0,
+  };
+
+  _increaseCount = () => {
+    this.setState({ count: this.state.count + 1 });
   };
 
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
+        <Text>Count: {this.state.count}</Text>
         <Button
           title="Go to Details"
           onPress={() => {
