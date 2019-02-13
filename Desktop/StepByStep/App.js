@@ -1,21 +1,28 @@
 import React from 'react';
-import { Button, View, Text ,Image } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
-
+import { Button, Image, View, Text } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class LogoTitle extends React.Component {
   render() {
     return (
-     
-     <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 50, height: 50}} />
+      <Image
+      source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+        style={{ width: 50, height: 50 }}
+      />
     );
   }
 }
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
     headerTitle: <LogoTitle />,
+    headerRight: (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Info"
+        color="#fff"
+      />
+    ),
   };
 
   render() {
@@ -28,7 +35,7 @@ class HomeScreen extends React.Component {
             /* 1. Navigate to the Details route with params */
             this.props.navigation.navigate('Details', {
               itemId: 86,
-              otherParam: 'anything you want here',
+              otherParam: 'First Details',
             });
           }}
         />
@@ -39,13 +46,11 @@ class HomeScreen extends React.Component {
 
 class DetailsScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
-    console.log(navigationOptions);
-    // Notice the logs ^
-    // sometimes we call with the default navigationOptions and other times
-    // we call this with the previous navigationOptions that were returned from
-    // this very function
+    const { params } = navigation.state;
+
     return {
-      title: navigation.getParam('otherParam', 'A Nested Details Screen'),
+      title: params ? params.otherParam : 'A Nested Details Screen',
+      /* These values are used instead of the shared configuration! */
       headerStyle: {
         backgroundColor: navigationOptions.headerTintColor,
       },
@@ -54,10 +59,10 @@ class DetailsScreen extends React.Component {
   };
 
   render() {
-    /* 2. Get the param, provide a fallback value if not available */
-    const { navigation } = this.props;
-    const itemId = navigation.getParam('itemId', 'NO-ID'); 
-    const otherParam = navigation.getParam('otherParam', 'some default value');
+    /* 2. Read the params from the navigation state */
+    const { params } = this.props.navigation.state;
+    const itemId = params ? params.itemId : null;
+    const otherParam = params ? params.otherParam : null;
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -65,20 +70,13 @@ class DetailsScreen extends React.Component {
         <Text>itemId: {JSON.stringify(itemId)}</Text>
         <Text>otherParam: {JSON.stringify(otherParam)}</Text>
         <Button
-          title="Go to Details... again"
-          onPress={() =>
-            this.props.navigation.push('Details', {
-              itemId: Math.floor(Math.random() * 100),
-            })}
-        />
-        <Button
           title="Update the title"
           onPress={() =>
             this.props.navigation.setParams({ otherParam: 'Updated!' })}
         />
         <Button
-          title="Go to Home"
-          onPress={() => this.props.navigation.navigate('Home')}
+          title="Go to Details... again"
+          onPress={() => this.props.navigation.navigate('Details')}
         />
         <Button
           title="Go back"
@@ -91,12 +89,15 @@ class DetailsScreen extends React.Component {
 
 const RootStack = createStackNavigator(
   {
-    Home: HomeScreen,
-    Details: DetailsScreen,
+    Home: {
+      screen: HomeScreen,
+    },
+    Details: {
+      screen: DetailsScreen,
+    },
   },
   {
     initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#f4511e',
