@@ -52,6 +52,11 @@ class DetailsScreen extends React.Component {
             })}
         />
         <Button
+          title="Update the title"
+          onPress={() =>
+            this.props.navigation.setParams({ otherParam: 'Updated!' })}
+        />
+        <Button
           title="Go to Home"
           onPress={() => this.props.navigation.navigate('Home')}
         />
