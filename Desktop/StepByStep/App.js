@@ -1,10 +1,21 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text ,Image } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
+
+
+class LogoTitle extends React.Component {
+  render() {
+    return (
+     
+     <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 50, height: 50}} />
+    );
+  }
+}
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
+    headerTitle: <LogoTitle />,
   };
 
   render() {
